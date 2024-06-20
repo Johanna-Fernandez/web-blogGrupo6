@@ -127,22 +127,27 @@ function habilitarboton() {
             window.location.href = 'index.html';
         }
 
-        for (var i = 1; i <= 5; i++) {
+        for (var i = 1; i <= 10; i++) {
             var respuestaUsuario = document.querySelector('input[name=q' + i + ']:checked');
             if (respuestaUsuario && respuestaUsuario.value === respuestas['q' + i]) {
-                puntaje++;
+                puntaje+=2;
             }
         }
 
-        document.getElementById('puntaje').innerText = puntaje + '/5';
+        document.getElementById('puntaje').innerText = puntaje + '/10';
 
-        if (puntaje === 5) {
-            document.getElementById('mensaje').innerText = '¡Excelente! ¡Obtuviste el puntaje perfecto!';
-        } else if (puntaje >= 3) {
-            document.getElementById('mensaje').innerText = '¡Bien hecho!';
-        } else {
-            document.getElementById('mensaje').innerText = 'Sigue practicando.';
-        }
+        if (puntaje === 10) {
+            document.getElementById('mensaje').innerText = '¡Felicitaciones! Obtuvo el máximo puntaje';
+    } else if (puntaje >= 7) {
+        document.getElementById('mensaje').innerText = '¡Buen trabajo! Ha obtenido un puntaje alto';
+    } else if (puntaje >= 5) {
+        document.getElementById('mensaje').innerText = '¡Bien hecho! Ha aprobado el cuestionario';
+    } else if (puntaje >= 3) {
+        document.getElementById('mensaje').innerText = 'Sigue practicando. Puedes hacerlo mejor.';
+    } else {
+        document.getElementById('mensaje').innerText = 'Tómate un tiempo para ver nuestro blog y conocernos mejor. ¡Hasta pronto!';
+    }
+     
     }
 
 </script>
