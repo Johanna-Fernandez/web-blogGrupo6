@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Document</title>
+    <script src="script.js" defer></script>
+
+</head>
+<body class="boddy">
+<div class="container">
+    <h1 class="titulo">Cuestionario</h1>
+    
+    <div id="countdown">--:--</div>
+    
+    <div id="questions">
+        <div class="question">
+            <p><strong>Pregunta 1:</strong> ¿Que numero de equipo somos?</p>
+            <label><input type="radio" name="q1" value="Equipo 1"> Equipo 1 </label><br>
+            <label><input type="radio" name="q1" value="Equipo 4"> Equipo 4 </label><br>
+            <label><input type="radio" name="q1" value="Equipo 6"> Equipo 6</label><br>
+        </div>
+        
+        <div class="question">
+            <p><strong>Pregunta 2:</strong> ¿Cuantos integrantes somos?</p>
+            <label><input type="radio" name="q2" value="4 integrantes"> 4 integrantes</label><br>
+            <label><input type="radio" name="q2" value="5 integrantes"> 5 integrantes </label><br>
+            <label><input type="radio" name="q2" value="6 integrantes"> 6 integrantes </label><br>
+        </div>
+        
+        <div class="question">
+            <p><strong>Pregunta 3:</strong> ¿Quien es el mas alto/a?</p>
+            <label><input type="radio" name="q3" value="Johanna"> Johanna </label><br>
+            <label><input type="radio" name="q3" value="Adriano"> Adriano </label><br>
+            <label><input type="radio" name="q3" value="Ivan"> Ivan </label><br>
+        </div>
+        
+        <div class="question">
+            <p><strong>Pregunta 4:</strong> ¿Quien juega Bascket?</p>
+            <label><input type="radio" name="q4" value="Daniel"> Daniel </label><br>
+            <label><input type="radio" name="q4" value="Ivan"> Ivan </label><br>
+            <label><input type="radio" name="q4" value="Gianluca"> Gianluca </label><br>
+        </div>
+        
+        <div class="question">
+            <p><strong>Pregunta 5:</strong> ¿Quien es mas timido/a?</p>
+            <label><input type="radio" name="q5" value="Daniel"> Daniel </label><br>
+            <label><input type="radio" name="q5" value="Johanna"> Johanna </label><br>
+            <label><input type="radio" name="q5" value="Adriano"> Adriano </label><br>
+        </div>
+
+        <button class="boton1" id="finishButton" onclick="finalizarCuestionario()" style="display: none">Finalizar Cuestionario</button>
+
+    </div>
+    
+     <button class="boton1" id="startButton" onclick="iniciarCuestionario()" disabled>Iniciar Cuestionario</button>
+     <button class="boton1" id="refreshButton" onClick="window.location.reload();" style="display: none">Volver a Intentar</button>
+     <button class="boton1" id="iraHome" onClick="iraHome();" style="display: none" >IR AL INICIO</button>
+
+    <div id="resultado" class="result">
+        <p><strong>Tu puntaje final:</strong> <span id="puntaje"></span></p>
+        <p id="mensaje"></p>
+    </div>
+</div>
+
+<script>
+
+var tiempoLimite = 11; 
+    var tiempoRestante = tiempoLimite;
+    var timer;
+    var puntaje = 0;
+
+    function iniciarTemporizador() {
+        timer = setInterval(function() {
+            tiempoRestante--;
+            var minutos = Math.floor(tiempoRestante / 60);
+            var segundos = tiempoRestante % 60;
+            document.getElementById('countdown').innerHTML =  minutos + ':' + (segundos < 10 ? '0' + segundos : segundos);
+            
+            if (tiempoRestante <= 0) {
+                clearInterval(timer);
+                habilitarboton();
+            }
+        }, 1000);
+    }
+    iniciarTemporizador();
+
+function habilitarboton() {
+    
+     document.getElementById('startButton').disabled = false;
+    
+}
+
+    function iniciarCuestionario() {
+        
+        document.getElementById('questions').style.display = 'block';
+        document.getElementById('startButton').style.display = 'none';
+        document.getElementById('countdown').style.display = 'none';
+        document.getElementById('finishButton').style.display = null;
+
+    }
+
+    function iraHome() {
+            window.location.href = 'index.html';
+        }
+
+    function finalizarCuestionario() {
+        clearInterval(timer);
+        document.getElementById('questions').style.display = 'none';
+        document.getElementById('resultado').style.display = 'block';
+        document.getElementById('countdown').style.display = 'none';
+        document.getElementById('refreshButton').style.display = null;
+        document.getElementById('finishButton').style.display = 'none';
+        document.getElementById('iraHome').style.display = null;
+
+        var respuestas = {
+            q1: 'Equipo 6',
+            q2: '5 integrantes',
+            q3: 'Adriano',
+            q4: 'Gianluca',
+            q5: 'Johanna'
+        };
+
+        function iraHome() {
+            window.location.href = 'index.html';
+        }
+
+        for (var i = 1; i <= 5; i++) {
+            var respuestaUsuario = document.querySelector('input[name=q' + i + ']:checked');
+            if (respuestaUsuario && respuestaUsuario.value === respuestas['q' + i]) {
+                puntaje++;
+            }
+        }
+
+        document.getElementById('puntaje').innerText = puntaje + '/5';
+
+        if (puntaje === 5) {
+            document.getElementById('mensaje').innerText = '¡Excelente! ¡Obtuviste el puntaje perfecto!';
+        } else if (puntaje >= 3) {
+            document.getElementById('mensaje').innerText = '¡Bien hecho!';
+        } else {
+            document.getElementById('mensaje').innerText = 'Sigue practicando.';
+        }
+    }
+
+</script>
+
+</body>
+</html>
